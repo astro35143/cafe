@@ -1,122 +1,364 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>카페 키오스크 주문</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오행결핍테스트 - 당신에게 결핍된 기운은?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100 min-h-screen p-4 md:p-8">
+<body>
+<div class="stars"></div>
 
-    <div class="max-w-4xl mx-auto">
-        <h1 class="text-3xl font-bold mb-8 text-gray-800 text-center">오늘의 메뉴 선택</h1>
-        
-        <!-- 카테고리 탭 -->
-        <div class="flex space-x-2 mb-6 overflow-x-auto pb-2" id="categoryTabs">
-            <button onclick="filterMenu('전체')" class="px-4 py-2 bg-blue-600 text-white rounded-lg font-bold whitespace-nowrap">전체</button>
-            <button onclick="filterMenu('커피')" class="px-4 py-2 bg-white text-gray-700 rounded-lg font-bold border whitespace-nowrap">커피</button>
-            <button onclick="filterMenu('에이드/스무디')" class="px-4 py-2 bg-white text-gray-700 rounded-lg font-bold border whitespace-nowrap">에이드/스무디</button>
-            <button onclick="filterMenu('티')" class="px-4 py-2 bg-white text-gray-700 rounded-lg font-bold border whitespace-nowrap">티</button>
-        </div>
-        
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8" id="menuGrid"></div>
+<div class="wrap">
 
-        <!-- 주문 결제 섹션 -->
-        <div class="bg-white p-6 rounded-2xl shadow-lg">
-            <h2 class="text-xl font-bold mb-4 border-b pb-2">선택한 메뉴</h2>
-            <ul id="orderList" class="space-y-3 h-48 overflow-y-auto mb-4"></ul>
-            <div class="flex justify-between items-center bg-gray-50 p-4 rounded-xl">
-                <span class="text-lg font-bold">결제 금액</span>
-                <span id="totalPrice" class="text-2xl font-black text-blue-700">0원</span>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mt-4">
-                <button onclick="downloadExcel()" class="bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition-colors">엑셀 다운로드</button>
-                <button onclick="resetOrder()" class="bg-gray-800 text-white py-3 rounded-xl font-bold hover:bg-black transition-colors">주문 완료</button>
-            </div>
-        </div>
-    </div>
+  <div class="hero">
+    <svg viewBox="0 0 400 400" role="img">
+      <title>태극과 동심원으로 이루어진 나경 스타일의 신비로운 차트</title>
+      <desc>중심에서 황금빛과 붉은빛이 타올라 바깥으로 갈수록 검게 가라앉는 동심원 구조 위에 태극 문양이 놓인 일러스트</desc>
+      <defs>
+        <radialGradient id="bgGlow" cx="50%" cy="46%" r="55%">
+          <stop offset="0%" stop-color="#7A3B14" stop-opacity="0.85"></stop>
+          <stop offset="45%" stop-color="#2A140A" stop-opacity="0.6"></stop>
+          <stop offset="100%" stop-color="#07060A" stop-opacity="0"></stop>
+        </radialGradient>
+        <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#F4C166" stop-opacity="1"></stop>
+          <stop offset="55%" stop-color="#E2654A" stop-opacity="0.9"></stop>
+          <stop offset="100%" stop-color="#E2654A" stop-opacity="0"></stop>
+        </radialGradient>
+      </defs>
+
+      <circle cx="200" cy="190" r="195" fill="url(#bgGlow)"></circle>
+
+      <g fill="none" stroke="#E8A33D">
+        <circle cx="200" cy="190" r="178" opacity="0.18" stroke-width="0.6"></circle>
+        <circle cx="200" cy="190" r="150" opacity="0.28" stroke-width="0.6"></circle>
+        <circle cx="200" cy="190" r="122" opacity="0.32" stroke-width="0.6"></circle>
+        <circle cx="200" cy="190" r="96" opacity="0.4" stroke-width="0.6"></circle>
+        <circle cx="200" cy="190" r="70" opacity="0.5" stroke-width="0.6"></circle>
+      </g>
+
+      <g stroke="#F4C166" stroke-width="0.6" opacity="0.5">
+        <line x1="200" y1="12" x2="200" y2="32"></line>
+        <line x1="200" y1="348" x2="200" y2="368"></line>
+        <line x1="22" y1="190" x2="42" y2="190"></line>
+        <line x1="358" y1="190" x2="378" y2="190"></line>
+        <line x1="74" y1="64" x2="88" y2="78"></line>
+        <line x1="326" y1="64" x2="312" y2="78"></line>
+        <line x1="74" y1="316" x2="88" y2="302"></line>
+        <line x1="326" y1="316" x2="312" y2="302"></line>
+      </g>
+
+      <g id="ticks-outer"></g>
+      <g id="ticks-mid"></g>
+
+      <circle cx="200" cy="190" r="44" fill="url(#coreGlow)"></circle>
+
+      <g transform="translate(200,190)">
+        <clipPath id="taijiClip">
+          <circle r="30"></circle>
+        </clipPath>
+        <g clip-path="url(#taijiClip)">
+          <circle r="30" fill="#F4ECD8"></circle>
+          <path d="M0 -30 A15 15 0 0 1 0 0 A15 15 0 0 0 0 30 A30 30 0 0 1 0 -30 Z" fill="#C8482A"></path>
+          <circle cy="-15" r="5" fill="#C8482A"></circle>
+          <circle cy="15" r="5" fill="#F4ECD8"></circle>
+        </g>
+        <circle r="30" fill="none" stroke="#F4C166" stroke-width="1" opacity="0.7"></circle>
+      </g>
+    </svg>
 
     <script>
-        const menuItems = [
-            { name: '아메리카노', price: 3000, category: '커피', img: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200&h=200&fit=crop' },
-            { name: '카페라떼', price: 4000, category: '커피', img: 'https://placehold.co/200x200?text=Latte' },
-            { name: '바닐라 라떼', price: 4500, category: '커피', img: 'https://placehold.co/200x200?text=Vanilla' },
-            { name: '카푸치노', price: 4000, category: '커피', img: 'https://placehold.co/200x200?text=Cappuccino' },
-            { name: '초코 라떼', price: 4500, category: '커피', img: 'https://placehold.co/200x200?text=Choco' },
-            { name: '레몬 에이드', price: 5000, category: '에이드/스무디', img: 'https://placehold.co/200x200?text=Lemon' },
-            { name: '자몽 에이드', price: 5000, category: '에이드/스무디', img: 'https://placehold.co/200x200?text=Grapefruit' },
-            { name: '딸기 스무디', price: 5500, category: '에이드/스무디', img: 'https://placehold.co/200x200?text=Smoothie' },
-            { name: '녹차 프라페', price: 5500, category: '에이드/스무디', img: 'https://placehold.co/200x200?text=GreenTea' },
-            { name: '얼그레이 티', price: 3500, category: '티', img: 'https://placehold.co/200x200?text=EarlGrey' }
-        ];
-
-        let orders = [];
-        let total = 0;
-
-        function renderMenu(category = '전체') {
-            const grid = document.getElementById('menuGrid');
-            grid.innerHTML = '';
-            const filtered = category === '전체' ? menuItems : menuItems.filter(i => i.category === category);
-            
-            filtered.forEach(item => {
-                grid.innerHTML += `
-                    <button onclick="addToOrder('${item.name}', ${item.price}, '${item.img}')" 
-                            class="bg-white p-3 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-gray-200 text-center">
-                        <img src="${item.img}" class="w-full h-24 object-cover rounded-lg mb-2">
-                        <h3 class="font-bold text-sm truncate">${item.name}</h3>
-                        <p class="text-blue-600 font-semibold text-xs">${item.price.toLocaleString()}원</p>
-                    </button>
-                `;
-            });
+      (function(){
+        var outer = document.getElementById('ticks-outer');
+        var mid = document.getElementById('ticks-mid');
+        if(!outer || !mid) return;
+        var cx = 200, cy = 190;
+        function ring(group, r, count, len, opacity){
+          var html = '';
+          for(var i = 0; i < count; i++){
+            var deg = (360 / count) * i;
+            var rad = deg * Math.PI / 180;
+            var x1 = cx + r * Math.cos(rad);
+            var y1 = cy + r * Math.sin(rad);
+            var x2 = cx + (r - len) * Math.cos(rad);
+            var y2 = cy + (r - len) * Math.sin(rad);
+            html += '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="#E8A33D" stroke-width="0.5" opacity="' + opacity + '"></line>';
+          }
+          group.innerHTML = html;
         }
-
-        function filterMenu(category) {
-            document.querySelectorAll('#categoryTabs button').forEach(btn => {
-                btn.className = btn.innerText === category ? 
-                    "px-4 py-2 bg-blue-600 text-white rounded-lg font-bold whitespace-nowrap" : 
-                    "px-4 py-2 bg-white text-gray-700 rounded-lg font-bold border whitespace-nowrap";
-            });
-            renderMenu(category);
-        }
-
-        function addToOrder(name, price, img) {
-            orders.push({ name, price });
-            total += price;
-            const orderList = document.getElementById('orderList');
-            const li = document.createElement('li');
-            li.className = "flex items-center justify-between bg-gray-50 p-2 rounded-lg";
-            li.innerHTML = `
-                <div class="flex items-center gap-3">
-                    <span class="font-medium">${name}</span>
-                </div>
-                <span class="font-bold">${price.toLocaleString()}원</span>
-            `;
-            orderList.appendChild(li);
-            document.getElementById('totalPrice').innerText = total.toLocaleString() + '원';
-        }
-
-        function downloadExcel() {
-            if (orders.length === 0) return alert('주문 내역이 없습니다!');
-            let csvContent = "\uFEFF메뉴명,가격\n";
-            orders.forEach(o => csvContent += `${o.name},${o.price}\n`);
-            csvContent += `총합계,${total}`;
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = "주문내역.csv";
-            link.click();
-        }
-
-        function resetOrder() {
-            if (total === 0) return alert('메뉴를 선택해주세요!');
-            alert('주문이 완료되었습니다!');
-            orders = [];
-            document.getElementById('orderList').innerHTML = '';
-            total = 0;
-            document.getElementById('totalPrice').innerText = '0원';
-        }
-
-        renderMenu();
+        ring(outer, 178, 48, 7, 0.35);
+        ring(mid, 122, 36, 6, 0.3);
+      })();
     </script>
+
+    <div class="hero-text">
+      <div class="eyebrow">오행결핍테스트</div>
+      <h1>당신에게 결핍된<br>오행은 무엇일까?</h1>
+      <p class="lead">생년월일시 하나만 입력하면 사주로 다섯 가지 기운 중 무엇이 비어있는지 알려드려요.</p>
+    </div>
+  </div>
+
+  <div class="panel" id="form-panel">
+    <div class="field-row">
+      <div class="field">
+        <label for="birth-date">생년월일</label>
+        <input type="date" id="birth-date" value="1995-06-15">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="birth-time">태어난 시간</label>
+        <input type="time" id="birth-time" value="14:30">
+      </div>
+      <div class="field">
+        <label for="time-unknown">&nbsp;</label>
+        <select id="time-unknown">
+          <option value="known">시간을 알아요</option>
+          <option value="unknown">시간을 몰라요</option>
+        </select>
+      </div>
+    </div>
+    <button id="calc-btn">내 결핍 기운 테스트하기</button>
+    <div class="hint">시간을 모르면 시(時) 기운은 계산에서 빼고 알려드려요.</div>
+  </div>
+
+  <div class="result" id="result">
+
+    <div class="panel wheel-section">
+      <p class="wheel-title">나의 오행 결핍 리포트</p>
+      <p class="wheel-sub" id="wheel-sub">진하게 채워진 칸일수록 그 기운이 강하고, 점선 칸은 결핍 상태예요</p>
+      <svg viewBox="0 0 240 240" id="wheel"></svg>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <div class="panel">
+      <p class="missions-title">결핍 처방 미션</p>
+      <p class="missions-sub" id="missions-sub">가장 비어있는 기운부터 이렇게 채워보세요.</p>
+      <div id="missions"></div>
+
+      <div class="saju-detail" id="saju-detail"></div>
+    </div>
+
+    <button class="reset-link" id="reset-btn">다시 테스트하기</button>
+  </div>
+
+  <p class="disclaimer">이 결과는 간단한 계산으로, 실제 명리학 상담과는 차이가 있을 수 있어요. 재미와 일상 참고용으로 봐주세요.</p>
+
+</div>
+
+<script>
+const STEMS = [
+  {name:'갑', el:'wood'}, {name:'을', el:'wood'},
+  {name:'병', el:'fire'}, {name:'정', el:'fire'},
+  {name:'무', el:'earth'}, {name:'기', el:'earth'},
+  {name:'경', el:'metal'}, {name:'신', el:'metal'},
+  {name:'임', el:'water'}, {name:'계', el:'water'}
+];
+const BRANCHES = [
+  {name:'자', el:'water'}, {name:'축', el:'earth'},
+  {name:'인', el:'wood'}, {name:'묘', el:'wood'},
+  {name:'진', el:'earth'}, {name:'사', el:'fire'},
+  {name:'오', el:'fire'}, {name:'미', el:'earth'},
+  {name:'신', el:'metal'}, {name:'유', el:'metal'},
+  {name:'술', el:'earth'}, {name:'해', el:'water'}
+];
+
+const ELEMENT_INFO = {
+  wood:  {label:'목(木)', bg:'var(--wood-bg)',  hex:'#8FD9BB'},
+  fire:  {label:'화(火)', bg:'var(--fire-bg)',  hex:'#EFA489'},
+  earth: {label:'토(土)', bg:'var(--earth-bg)', hex:'#F0C26B'},
+  metal: {label:'금(金)', bg:'var(--metal-bg)', hex:'#C9C7BE'},
+  water: {label:'수(水)', bg:'var(--water-bg)', hex:'#8FBCEE'}
+};
+
+const MISSIONS = {
+  wood: [
+    '책상 위에 작은 화분 하나 들이기',
+    '초록색 옷이나 소품 하나 챙겨보기',
+    '오늘 하루 새로운 계획 하나 적어보기',
+    '나무나 식물이 있는 길로 산책하기'
+  ],
+  fire: [
+    '평소보다 밝은 조명 아래서 시간 보내기',
+    '먼저 인사하거나 안부 메시지 보내보기',
+    '따뜻한 색(빨강, 주황) 소품 곁에 두기',
+    '관심 있던 일을 오늘 한 가지 실행해보기'
+  ],
+  earth: [
+    '방 한 곳을 정리정돈하기',
+    '미뤄둔 약속이나 일정을 확정하기',
+    '베이지, 황토색 계열 물건 가까이 두기',
+    '믿을 만한 사람과 짧게라도 대화하기'
+  ],
+  metal: [
+    '책상이나 가방 속 불필요한 물건 정리하기',
+    '오늘 할 일 목록을 명확히 정리해보기',
+    '메탈 소재 소품(시계, 액세서리) 챙기기',
+    '결정을 미뤄온 일 하나 마무리하기'
+  ],
+  water: [
+    '물을 평소보다 조금 더 마시기',
+    '거울 앞에서 잠시 호흡 가다듬기',
+    '파란색이나 검은색 소품 곁에 두기',
+    '혼자만의 조용한 시간 10분 가지기'
+  ]
+};
+
+function gregorianToJDN(y, m, d){
+  const a = Math.floor((14 - m) / 12);
+  const y2 = y + 4800 - a;
+  const m2 = m + 12 * a - 3;
+  return d + Math.floor((153 * m2 + 2) / 5) + 365 * y2 + Math.floor(y2 / 4) - Math.floor(y2 / 100) + Math.floor(y2 / 400) - 32045;
+}
+
+function hourToBranchIndex(hour){
+  if(hour === 23 || hour < 1) return 0;
+  return Math.floor((hour + 1) / 2) % 12;
+}
+
+function calculate(year, month, day, hour, hasHour){
+  const yearStemIdx = ((year - 4) % 10 + 10) % 10;
+  const yearBranchIdx = ((year - 4) % 12 + 12) % 12;
+  const monthBranchIdx = ((month + 1) % 12 + 12) % 12;
+  const jdn = gregorianToJDN(year, month, day);
+  const dayIdx = ((jdn + 49) % 60 + 60) % 60;
+  const dayStemIdx = dayIdx % 10;
+  const dayBranchIdx = dayIdx % 12;
+
+  const pieces = [
+    STEMS[yearStemIdx],
+    BRANCHES[yearBranchIdx],
+    BRANCHES[monthBranchIdx],
+    STEMS[dayStemIdx],
+    BRANCHES[dayBranchIdx]
+  ];
+  if(hasHour){
+    pieces.push(BRANCHES[hourToBranchIndex(hour)]);
+  }
+
+  const counts = {wood:0, fire:0, earth:0, metal:0, water:0};
+  pieces.forEach(p => counts[p.el]++);
+
+  return {counts, pieces};
+}
+
+function describeArc(cx, cy, r, startDeg, endDeg){
+  const start = polarToCartesian(cx, cy, r, endDeg);
+  const end = polarToCartesian(cx, cy, r, startDeg);
+  const largeArc = endDeg - startDeg <= 180 ? '0' : '1';
+  return 'M ' + start.x + ' ' + start.y + ' A ' + r + ' ' + r + ' 0 ' + largeArc + ' 0 ' + end.x + ' ' + end.y;
+}
+
+function polarToCartesian(cx, cy, r, deg){
+  const rad = (deg - 90) * Math.PI / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function drawWheel(counts){
+  const order = ['wood','fire','earth','metal','water'];
+  const total = Object.values(counts).reduce((a,b)=>a+b,0) || 1;
+  const cx = 120, cy = 120, rOuter = 100, rInner = 50;
+  let startAngle = -90;
+  let svgParts = [];
+
+  order.forEach(el => {
+    const value = counts[el];
+    let angle = (value / total) * 360;
+    if(angle === 0) angle = 0.001;
+    const endAngle = startAngle + angle;
+    const r = value === 0 ? rInner + 10 : rOuter;
+    const path = describeArc(cx, cy, r, startAngle, endAngle);
+    const isEmpty = value === 0;
+    svgParts.push(
+      '<path d="' + path + ' L ' + cx + ' ' + cy + ' Z" fill="' + ELEMENT_INFO[el].hex + '" opacity="' + (isEmpty ? 0.18 : 0.85) + '" stroke="' + ELEMENT_INFO[el].hex + '" stroke-width="1" stroke-dasharray="' + (isEmpty ? '4 3' : '0') + '"></path>'
+    );
+    startAngle = endAngle;
+  });
+
+  document.getElementById('wheel').innerHTML =
+    '<circle cx="120" cy="120" r="' + rInner + '" fill="#07060A"></circle>' +
+    svgParts.join('') +
+    '<circle cx="120" cy="120" r="' + rInner + '" fill="#1A0E06" stroke="rgba(232,163,61,0.3)" stroke-width="1"></circle>';
+}
+
+function renderLegend(counts){
+  const order = ['wood','fire','earth','metal','water'];
+  document.getElementById('legend').innerHTML = order.map(el => {
+    const info = ELEMENT_INFO[el];
+    return '<div class="legend-item">' +
+      '<div class="dot" style="background:' + info.hex + '"></div>' +
+      '<div class="legend-count" style="color:' + info.hex + '">' + counts[el] + '</div>' +
+      '<div class="legend-name">' + info.label + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function renderMissions(counts){
+  const order = ['wood','fire','earth','metal','water'];
+  const sorted = order.slice().sort((a,b) => counts[a] - counts[b]);
+  const lowest = counts[sorted[0]];
+  const lacking = sorted.filter(el => counts[el] === lowest).slice(0, 2);
+
+  document.getElementById('missions').innerHTML =
+    '<div class="tarot-row">' +
+    lacking.map(el => {
+      const info = ELEMENT_INFO[el];
+      const list = MISSIONS[el];
+      const pick = list[Math.floor(Math.random() * list.length)];
+      return '<div class="tarot-card">' +
+        '<div class="tarot-symbol" style="background:' + info.hex + '22; border:1px solid ' + info.hex + ';"></div>' +
+        '<span class="tarot-tag" style="color:' + info.hex + ';">' + info.label + ' 결핍</span>' +
+        '<p class="tarot-text">' + pick + '</p>' +
+        '</div>';
+    }).join('') +
+    '</div>';
+}
+
+function renderDetail(pieces, hasHour){
+  const labels = hasHour
+    ? ['연간', '연지', '월지', '일간', '일지', '시지']
+    : ['연간', '연지', '월지', '일간', '일지'];
+  document.getElementById('saju-detail').innerHTML = pieces.map((p, i) => {
+    return '<div class="saju-row"><span>' + labels[i] + '</span><span>' + p.name + ' · ' + ELEMENT_INFO[p.el].label + '</span></div>';
+  }).join('');
+}
+
+document.getElementById('calc-btn').addEventListener('click', () => {
+  const dateVal = document.getElementById('birth-date').value;
+  const timeVal = document.getElementById('birth-time').value;
+  const timeUnknown = document.getElementById('time-unknown').value === 'unknown';
+
+  if(!dateVal){
+    alert('생년월일을 입력해주세요.');
+    return;
+  }
+
+  const [year, month, day] = dateVal.split('-').map(Number);
+  let hour = 12;
+  if(!timeUnknown && timeVal){
+    hour = Number(timeVal.split(':')[0]);
+  }
+
+  const { counts, pieces } = calculate(year, month, day, hour, !timeUnknown);
+
+  drawWheel(counts);
+  renderLegend(counts);
+  renderMissions(counts);
+  renderDetail(pieces, !timeUnknown);
+
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('form-panel').style.display = 'none';
+  document.getElementById('result').scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+document.getElementById('reset-btn').addEventListener('click', () => {
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('form-panel').style.display = 'block';
+});
+</script>
 </body>
 </html>
