@@ -135,6 +135,29 @@
     outline:none;
     border-color:var(--gold);
   }
+  .date-inputs{
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .date-inputs input[type="number"]{
+    -moz-appearance:textfield;
+    text-align:center;
+    padding:11px 8px;
+  }
+  .date-inputs input[type="number"]::-webkit-inner-spin-button,
+  .date-inputs input[type="number"]::-webkit-outer-spin-button{
+    -webkit-appearance:none;
+    margin:0;
+  }
+  #birth-year{ width:82px; flex:none; }
+  #birth-month{ width:52px; flex:none; }
+  #birth-day{ width:52px; flex:none; }
+  .date-sep{
+    font-size:13px;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
   button{
     font-family:'Noto Sans KR', sans-serif;
     font-weight:500;

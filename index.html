@@ -105,8 +105,15 @@
   <div class="panel" id="form-panel">
     <div class="field-row">
       <div class="field">
-        <label for="birth-date">생년월일</label>
-        <input type="date" id="birth-date" value="1995-06-15">
+        <label>생년월일</label>
+        <div class="date-inputs">
+          <input type="number" id="birth-year" placeholder="년도" min="1900" max="2025" inputmode="numeric">
+          <span class="date-sep">년</span>
+          <input type="number" id="birth-month" placeholder="월" min="1" max="12" inputmode="numeric">
+          <span class="date-sep">월</span>
+          <input type="number" id="birth-day" placeholder="일" min="1" max="31" inputmode="numeric">
+          <span class="date-sep">일</span>
+        </div>
       </div>
     </div>
     <div class="field-row">
@@ -328,16 +335,33 @@ function renderDetail(pieces, hasHour){
 }
 
 document.getElementById('calc-btn').addEventListener('click', () => {
-  const dateVal = document.getElementById('birth-date').value;
+  const yearVal = document.getElementById('birth-year').value.trim();
+  const monthVal = document.getElementById('birth-month').value.trim();
+  const dayVal = document.getElementById('birth-day').value.trim();
   const timeVal = document.getElementById('birth-time').value;
   const timeUnknown = document.getElementById('time-unknown').value === 'unknown';
 
-  if(!dateVal){
-    alert('생년월일을 입력해주세요.');
+  if(!yearVal || !monthVal || !dayVal){
+    alert('생년월일을 모두 입력해주세요.');
     return;
   }
 
-  const [year, month, day] = dateVal.split('-').map(Number);
+  const year = Number(yearVal);
+  const month = Number(monthVal);
+  const day = Number(dayVal);
+
+  if(year < 1900 || year > 2025){
+    alert('년도를 올바르게 입력해주세요. (1900~2025)');
+    return;
+  }
+  if(month < 1 || month > 12){
+    alert('월을 올바르게 입력해주세요. (1~12)');
+    return;
+  }
+  if(day < 1 || day > 31){
+    alert('일을 올바르게 입력해주세요. (1~31)');
+    return;
+  }
   let hour = 12;
   if(!timeUnknown && timeVal){
     hour = Number(timeVal.split(':')[0]);
@@ -358,6 +382,13 @@ document.getElementById('calc-btn').addEventListener('click', () => {
 document.getElementById('reset-btn').addEventListener('click', () => {
   document.getElementById('result').style.display = 'none';
   document.getElementById('form-panel').style.display = 'block';
+});
+
+document.getElementById('birth-year').addEventListener('input', function(){
+  if(this.value.length === 4) document.getElementById('birth-month').focus();
+});
+document.getElementById('birth-month').addEventListener('input', function(){
+  if(this.value.length === 2) document.getElementById('birth-day').focus();
 });
 </script>
 </body>
